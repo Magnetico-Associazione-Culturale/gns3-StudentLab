@@ -96,8 +96,15 @@ Una volta dentro la cartella "documenti" scaricheremo l'archivio da GitHub e est
         cd gns3-StudentLab-main
         ```
 
-
 ### Passaggio 3: Avvia la Macchina Virtuale GNS3
+1.  **Assicurati di essere ancora nella cartella del tuo laboratorio GNS3** (dove hai estratto i file) nel terminale.
+    * Se hai chiuso il terminale o cambiato directory, riaprilo e naviga di nuovo a quella cartella:
+        * **Per Windows (PowerShell):** `cd "$env:USERPROFILE\Documents\gns3-StudentLab-main"`
+        * **Per macOS/Linux (Bash):** `cd ~/Documents/gns3-StudentLab-main`
+
+2. **Scarica all'interno della cartella di progetto il file** `gns3-vm.box`
+
+### Passaggio 4: Avvia la Macchina Virtuale GNS3
 
 1.  **Assicurati di essere ancora nella cartella del tuo laboratorio GNS3** (dove hai estratto i file) nel terminale.
     * Se hai chiuso il terminale o cambiato directory, riaprilo e naviga di nuovo a quella cartella:
