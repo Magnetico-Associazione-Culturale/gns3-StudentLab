@@ -62,43 +62,47 @@ GNS3 prevede che la versione del software GUI sia la stessa in uso su GNS3 VM. P
 
 Segui attentamente questi passaggi per preparare il tuo ambiente di laboratorio:
 
-### Passaggio 1: Crea una cartella per il tuo progetto e scarica il contenuto di questa repo da GitHub 
+### Passaggio 1: Scarica il contenuto di questa repo da GitHub 
 
 1.  **Apri un terminale** sul tuo computer:
     * **Windows:** Cerca "PowerShell" nel menu Start e aprilo.
     * **macOS/Linux:** Apri l'applicazione "Terminale".
-2. **Crea la cartella per il tuo laboratorio GNS3 e naviga al suo interno.** Questa è la cartella principale del tuo progetto, dove saranno estratti tutti i file.
+2. **Scarica ed estrai i file di progetto.** 
+Una volta dentro la cartella "documenti" scaricheremo l'archivio da GitHub e estrarremo la cartella di progetto contente tutti i file.
 
     * **Per Windows (PowerShell):**
         ```powershell
-        New-Item -Path "$env:USERPROFILE\Documents\" -Name "gns3-StudentLab" -ItemType "Directory"
+        cd "$env:USERPROFILE\Documents"
+        
+        Invoke-WebRequest -Uri "https://github.com/Magnetico-Associazione-Culturale/gns3-StudentLab/archive/refs/heads/main.zip" -OutFile "archive.zip"
+        
+        Expand-Archive -LiteralPath .\archive.zip -DestinationPath "."
 
-        cd "$env:USERPROFILE\Documents\gns3-StudentLab"
+        Remove-Item "archive.zip"
+
+        cd ".\gns3-StudentLab-main\"
         ```
 
     * **Per macOS/Linux (Bash):**
         ```bash
-        mkdir -p ~/Documents/gns3-StudentLab
-        cd ~/Documents/gns3-StudentLab
+        cd ~/Documents
+
+        wget "https://github.com/Magnetico-Associazione-Culturale/gns3-StudentLab/archive/refs/heads/main.zip" -O "archive.zip"
+
+        unzip "archive.zip" -d "."
+
+        rm "archive.zip"
+
+        cd gns3-StudentLab-main
         ```
 
-3. **Scarica il contenuto della  la repository con git clone**
-
-    * **Per Windows (PowerShell):**
-        ```powershell
-        git clone https://github.com/Magnetico-Associazione-Culturale/gns3-StudentLab.git "$env:USERPROFILE\Documents\gns3-StudentLab"
-        ```
-    * **Per macOS/Linux (Bash):**
-        ```bash
-        git clone https://github.com/Magnetico-Associazione-Culturale/gns3-StudentLab.git ~/Documents/gns3-StudentLab
-        ```
 
 ### Passaggio 3: Avvia la Macchina Virtuale GNS3
 
 1.  **Assicurati di essere ancora nella cartella del tuo laboratorio GNS3** (dove hai estratto i file) nel terminale.
     * Se hai chiuso il terminale o cambiato directory, riaprilo e naviga di nuovo a quella cartella:
-        * **Per Windows (PowerShell):** `cd "$env:USERPROFILE\Documents\GNS3-Lab"`
-        * **Per macOS/Linux (Bash):** `cd ~/Documents/GNS3-Lab`
+        * **Per Windows (PowerShell):** `cd "$env:USERPROFILE\Documents\gns3-StudentLab-main"`
+        * **Per macOS/Linux (Bash):** `cd ~/Documents/gns3-StudentLab-main`
 2.  **Avvia la macchina virtuale GNS3** con Vagrant. Questo comando impiegherà alcuni minuti, specialmente la prima volta, poiché Vagrant importerà la VM e la configurerà:
     ```bash
     vagrant up
@@ -116,7 +120,7 @@ Una volta che la macchina virtuale è avviata (il terminale dovrebbe tornare al 
 4.  Se GNS3 ha già rilevato un server, puoi modificarlo. Altrimenti, clicca su **`Aggiungi` (Add)**.
 5.  Configura il server remoto con i seguenti dettagli:
     * **Host:** `192.168.56.101` (Questo è l'indirizzo IP che Vagrant ha assegnato alla tua VM GNS3 sulla rete Host-Only).
-    * **Porta (Port):** `3080`
+    * **Porta (Port):** `80`
 6.  Clicca `Applica` (Apply) o `OK`.
 7.  Verifica che la connessione al server remoto sia riuscita. Dovrebbe esserci un **puntino verde** accanto all'indirizzo IP del server in `Server Remoti`.
 
@@ -126,9 +130,8 @@ Una volta che la macchina virtuale è avviata (il terminale dovrebbe tornare al 
 
 Ora sei pronto per iniziare i tuoi esercizi di laboratorio GNS3!
 
-* Trascina e rilascia i dispositivi dalla barra laterale sul tuo spazio di lavoro.
-* Tutte le immagini dei dispositivi che l'istruttore ha pre-caricato nella VM saranno immediatamente disponibili.
-* I dispositivi verranno eseguiti all'interno della macchina virtuale GNS3, liberando risorse dal tuo computer host.
+* Apri il progetto di tuo interesse.
+* Apri sul web la LabGuide di riferimento 
 
 ---
 
