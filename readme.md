@@ -1,21 +1,14 @@
-# Guida rapida: Configurazione del Laboratorio GNS3 con Vagrant 🚀
+# Guida rapida: Configura il tuo laboratorio GNS3 personale  
 
-Questa guida ti aiuterà a configurare rapidamente l'ambiente di laboratorio GNS3 sul tuo computer, utilizzando Vagrant per semplificare l'installazione della macchina virtuale.
+Questa guida ti aiuterà a configurare rapidamente l'ambiente di laboratorio GNS3 sul tuo computer, per semplificare l'installazione della macchina virtuale e la sua gestione su [VirtualBox](https://www.virtualbox.org/) userai [Vagrant](https://developer.hashicorp.com/vagrant)
 
-## 1. Prerequisiti Essenziali
+## 1. Prerequisiti 
 
-Prima di iniziare, assicurati di avere installato i seguenti software e di aver configurato il tuo computer correttamente:
+Prima di iniziare, verifica che il tuo dispositivo soddisfi i requisiti minimi necessari ed assicurati di avere installato i seguenti software:
 
-* **Vagrant:** Lo strumento che useremo per gestire la macchina virtuale.
-    * **Scarica da:** [https://www.vagrantup.com/downloads](https://www.vagrantup.com/downloads)
-    * Segui le istruzioni di installazione per il tuo sistema operativo.
-    * **Importante:** Dopo l'installazione, chiudi e riapri il terminale/Prompt dei Comandi. Verifica l'installazione digitando `vagrant --version`.
-* **Oracle VirtualBox:** Il software di virtualizzazione su cui girerà la macchina virtuale GNS3.
-    * **Scarica da:** [https://www.virtualbox.org/wiki/Downloads](https://www.virtualbox.org/wiki/Downloads)
-    * Segui le istruzioni di installazione per il tuo sistema operativo.
-    * **Cruciale:** Assicurati che la **Tecnologia di Virtualizzazione (Intel VT-x / AMD-V)** sia abilitata nelle impostazioni del BIOS/UEFI del tuo computer. Senza di essa, le macchine virtuali non potranno essere eseguite.
-
-    ### Verifica la Tecnologia di Virtualizzazione (VT-x / AMD-V) ✅
+### Requisiti di sistema
+* **≥ 4GB RAM** disponibile
+* Virtualizzazione abilitata (VT-x / AMD-V) 
 
     La virtualizzazione hardware è **indispensabile** per il corretto funzionamento di VirtualBox. Ecco come verificare se è abilitata sul tuo sistema:
 
@@ -48,59 +41,57 @@ Prima di iniziare, assicurati di avere installato i seguenti software e di aver 
 
     * **Se la Virtualizzazione è Disabilitata:** Dovrai **riavviare il tuo computer** e accedere alle impostazioni del **BIOS/UEFI** (solitamente premendo un tasto come `Canc`, `F2`, `F10`, `F12` all'avvio). Cerca una sezione relativa a "CPU Configuration", "Virtualization Technology", "VT-x", "AMD-V" o "Intel Virtualization Technology" e **abilitarla**. Salva le modifiche e riavvia il sistema.
 
-* **GNS3 Graphical User Interface (GUI):** L'applicazione che userai sul tuo computer per disegnare le topologie di rete e connetterti alla macchina virtuale GNS3.
-    * **Scarica da:** [https://gns3.com/software/download](https://gns3.com/software/download)
-    * Installa la versione adatta al tuo sistema operativo.
-* **Risorse Hardware:** Per un'esperienza fluida, è consigliato avere almeno **8 GB di RAM totali** sul tuo computer (la VM GNS3 userà 4 GB) e una CPU moderna.
+### Software Necessari
+Assicurati di aver installato i seguenti software prima di procedere con il setup del tuo laboratorio su GNS3
 
+* **Vagrant:** Lo strumento che useremo per gestire la macchina virtuale.
+    * **Scarica da:** [https://www.vagrantup.com/downloads](https://www.vagrantup.com/downloads)
+    * Segui le istruzioni di installazione per il tuo sistema operativo.
+    * **Importante:** Dopo l'installazione, chiudi e riapri il terminale/Prompt dei Comandi. Verifica l'installazione digitando `vagrant --version`.
+* **Oracle VirtualBox:** Il software di virtualizzazione su cui girerà la macchina virtuale GNS3.
+    * **Scarica** [VirtualBox](https://www.virtualbox.org/wiki/Downloads) dal sito ufficiale.
+    * Esegui l'installer di VirtualBox e segui le istruzioni del wizard per completare l'installazione.
+
+* **GNS3 Graphical User Interface (GUI):** L'applicazione che userai sul tuo computer per eseguire i laboratori preconfigurati, creare topologie di rete ed mettere alla prova le  tue competenze. 
+GNS3 prevede che la versione del software GUI sia la stessa in uso su GNS3 VM. Per tanto scaricheremo la versione GNS3 GUI 2.2.50 
+    * **Scarica** [GNS3 GUI 2.2.50](https://github.com/GNS3/gns3-gui/releases/download/v2.2.50/GNS3-2.2.50-all-in-one.exe)
+    * Segui le istruzioni di installazione per il tuo sistema operativo.
 ---
 
 ## 2. Configurazione del Laboratorio GNS3
 
 Segui attentamente questi passaggi per preparare il tuo ambiente di laboratorio:
 
-### Passaggio 1: Scarica il Package del Laboratorio e Prepara la Cartella
+### Passaggio 1: Crea una cartella per il tuo progetto e scarica il contenuto di questa repo da GitHub 
 
-1.  **Scarica il file ZIP del laboratorio** che ti è stato fornito (es. `GNS3_Lab_VM_v1.0.1.zip` o `GNS3.VM.VirtualBox.2.2.50.zip`). Questo file contiene la configurazione di Vagrant e la macchina virtuale GNS3 pre-configurata. **Salva questo file nella tua cartella `Downloads` (`Scarica`).**
-
-2.  **Apri un terminale** sul tuo computer:
+1.  **Apri un terminale** sul tuo computer:
     * **Windows:** Cerca "PowerShell" nel menu Start e aprilo.
     * **macOS/Linux:** Apri l'applicazione "Terminale".
-
-3.  **Crea la cartella per il tuo laboratorio GNS3 e naviga al suo interno.** Questa è la cartella principale del tuo progetto, dove saranno estratti tutti i file.
+2. **Crea la cartella per il tuo laboratorio GNS3 e naviga al suo interno.** Questa è la cartella principale del tuo progetto, dove saranno estratti tutti i file.
 
     * **Per Windows (PowerShell):**
         ```powershell
-        New-Item -Path "$env:USERPROFILE\Documents\" -Name "GNS3-Lab" -ItemType "Directory"
-        cd "$env:USERPROFILE\Documents\GNS3-Lab"
+        New-Item -Path "$env:USERPROFILE\Documents\" -Name "gns3-StudentLab" -ItemType "Directory"
+
+        cd "$env:USERPROFILE\Documents\gns3-StudentLab"
         ```
 
     * **Per macOS/Linux (Bash):**
         ```bash
-        mkdir -p ~/Documents/GNS3-Lab
-        cd ~/Documents/GNS3-Lab
+        mkdir -p ~/Documents/gns3-StudentLab
+        cd ~/Documents/gns3-StudentLab
         ```
 
-### Passaggio 2: Estrai il Contenuto nella Cartella del Laboratorio
-
-Ora che sei nella cartella corretta, estrai il file ZIP scaricato al suo interno.
-
-1.  **Estrai il contenuto del file ZIP** nella cartella corrente del tuo laboratorio.
+3. **Scarica il contenuto della  la repository con git clone**
 
     * **Per Windows (PowerShell):**
         ```powershell
-        Expand-Archive -LiteralPath "$env:USERPROFILE\Downloads\GNS3.VM.VirtualBox.2.2.50.zip" -DestinationPath "."
+        git clone https://github.com/Magnetico-Associazione-Culturale/gns3-StudentLab.git "$env:USERPROFILE\Documents\gns3-StudentLab"
         ```
-        *(Nota: `.` indica la cartella corrente. Sostituisci `GNS3.VM.VirtualBox.2.2.50.zip` con il nome esatto del file ZIP che hai scaricato se diverso.)*
-
     * **Per macOS/Linux (Bash):**
         ```bash
-        unzip "$HOME/Downloads/GNS3_Lab_VM_v1.0.1.zip" -d "."
+        git clone https://github.com/Magnetico-Associazione-Culturale/gns3-StudentLab.git ~/Documents/gns3-StudentLab
         ```
-        *(Nota: `.` indica la cartella corrente. Sostituisci `GNS3_Lab_VM_v1.0.1.zip` con il nome esatto del file ZIP che hai scaricato se diverso.)*
-        * Se `unzip` non è installato, potresti doverlo installare: `sudo apt install unzip` (Linux Debian/Ubuntu) o `brew install unzip` (macOS con Homebrew).
-
-    **Dopo l'estrazione, la cartella `GNS3-Lab` (o qualsiasi nome tu le abbia dato) dovrebbe contenere `Vagrantfile` e `gns3-vm.box`.**
 
 ### Passaggio 3: Avvia la Macchina Virtuale GNS3
 
