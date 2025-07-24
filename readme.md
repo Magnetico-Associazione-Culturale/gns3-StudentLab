@@ -96,21 +96,27 @@ Una volta dentro la cartella "documenti" scaricheremo l'archivio da GitHub e est
         cd gns3-StudentLab-main
         ```
 
-### Passaggio 3: Avvia la Macchina Virtuale GNS3
+### Passaggio 2: Scarica il file box vagrant pre-configurato 
 1.  **Assicurati di essere ancora nella cartella del tuo laboratorio GNS3** (dove hai estratto i file) nel terminale.
     * Se hai chiuso il terminale o cambiato directory, riaprilo e naviga di nuovo a quella cartella:
         * **Per Windows (PowerShell):** `cd "$env:USERPROFILE\Documents\gns3-StudentLab-main"`
         * **Per macOS/Linux (Bash):** `cd ~/Documents/gns3-StudentLab-main`
 
 2. **Scarica all'interno della cartella di progetto il file** `gns3-vm.box`
+    * [Clicca qui](https://drive.google.com/file/d/1RwcVN6Ov3NVppj8GoKsLJzc-6TNMdVcv/view?usp=sharing) per scaricare il file `gns3-vm.box` 
+    * Sposta il file scaricato nella cartella di progetto `Documents\gns3-StudentLab-main`  
 
-### Passaggio 4: Avvia la Macchina Virtuale GNS3
+### Passaggio 3: Avvia la Macchina Virtuale GNS3
 
 1.  **Assicurati di essere ancora nella cartella del tuo laboratorio GNS3** (dove hai estratto i file) nel terminale.
     * Se hai chiuso il terminale o cambiato directory, riaprilo e naviga di nuovo a quella cartella:
         * **Per Windows (PowerShell):** `cd "$env:USERPROFILE\Documents\gns3-StudentLab-main"`
         * **Per macOS/Linux (Bash):** `cd ~/Documents/gns3-StudentLab-main`
-2.  **Avvia la macchina virtuale GNS3** con Vagrant. Questo comando impiegherà alcuni minuti, specialmente la prima volta, poiché Vagrant importerà la VM e la configurerà:
+2.  **Aggiorna il catalogo locale**
+    ``` bash
+    vagrant box add gns3-vm gns3-vm.box --force
+    ```
+3.  **Avvia la macchina virtuale GNS3** con Vagrant. Questo comando impiegherà alcuni minuti, specialmente la prima volta, poiché Vagrant importerà la VM e la configurerà:
     ```bash
     vagrant up
     ```
@@ -158,7 +164,7 @@ Questi comandi ti aiuteranno a gestire la tua macchina virtuale GNS3:
 ## 5. Risoluzione dei Problemi Comuni 💡
 
 * **`vagrant` non riconosciuto:** Assicurati che Vagrant sia installato correttamente e che il tuo terminale sia stato riavviato dopo l'installazione.
-* **La VM non si avvia / Errore di Virtualizzazione:** **Rivedi il "Passaggio 1: Prerequisiti Essenziali" per verificare che la Tecnologia di Virtualizzazione sia abilitata.** Se è disabilitata, dovrai abilitarla nel BIOS/UEFI del tuo computer.
+* **La VM non si avvia / Errore di Virtualizzazione:** **Rivedi i "Prerequisiti " per verificare che la Tecnologia di Virtualizzazione sia abilitata.** Se è disabilitata, dovrai abilitarla nel BIOS/UEFI del tuo computer.
 * **La GUI di GNS3 non si connette alla VM:**
     * Verifica che la VM sia in esecuzione (`vagrant status` dovrebbe mostrare `running`).
     * Assicurati di aver inserito l'indirizzo IP corretto (`192.168.56.101`) e la porta (`3080`) nelle preferenze della GUI di GNS3.
