@@ -123,19 +123,25 @@ Una volta dentro la cartella "documenti" scaricheremo l'archivio da GitHub e est
     * **Cosa succede:** Vagrant rileverà il file `gns3-vm.box` locale, lo aggiungerà al suo catalogo interno (se non presente), creerà una nuova macchina virtuale in VirtualBox, le assegnerà 4GB di RAM e 2 CPU, e configurerà la rete Host-Only con l'indirizzo IP **`192.168.56.101`**.
     * Durante l'avvio, potresti vedere messaggi relativi all'autenticazione SSH. Se la VM si avvia correttamente, significa che l'autenticazione ha funzionato.
 
-### Passaggio 4: Configura la GUI di GNS3 per Connettersi alla VM
+### Passaggio 4: Configura la GUI di GNS3 per connettersi alla VM
 
-Una volta che la macchina virtuale è avviata (il terminale dovrebbe tornare al prompt dopo `vagrant up` e la VM dovrebbe essere "Running" in VirtualBox), puoi connettere la GUI di GNS3:
+Una volta che la macchina virtuale è avviata (il terminale dovrebbe tornare al prompt dopo `vagrant up` e la VM dovrebbe risultare *Running* in VirtualBox), puoi connettere la GUI di GNS3:
 
-1.  **Avvia l'applicazione GNS3 GUI** sul tuo computer (non dentro la VM).
-2.  Nel menu di GNS3, vai su `Modifica` (Edit) > `Preferenze` (Preferences).
-3.  Nella finestra delle Preferenze, seleziona `Server` > `Server Remoti` (Remote Servers) nel pannello di sinistra.
-4.  Se GNS3 ha già rilevato un server, puoi modificarlo. Altrimenti, clicca su **`Aggiungi` (Add)**.
-5.  Configura il server remoto con i seguenti dettagli:
-    * **Host:** `192.168.56.101` (Questo è l'indirizzo IP che Vagrant ha assegnato alla tua VM GNS3 sulla rete Host-Only).
-    * **Porta (Port):** `80`
-6.  Clicca `Applica` (Apply) o `OK`.
-7.  Verifica che la connessione al server remoto sia riuscita. Dovrebbe esserci un **puntino verde** accanto all'indirizzo IP del server in `Server Remoti`.
+1. Avvia l’applicazione **GNS3 GUI** sul tuo computer (non dentro la VM).  
+2. Nel menu di GNS3, vai su **Modifica (Edit) > Preferenze (Preferences)**.  
+3. Nella finestra delle Preferenze, seleziona **Server > Main server** nel pannello di sinistra.  
+4. **Disabilita** l’opzione “Enable local server”.  
+5. Configura il **main server remoto** con i seguenti parametri:  
+   - **Protocol:** HTTP  
+   - **Host:** `192.168.56.101` *(oppure l’indirizzo IP assegnato alla tua VM GNS3)*  
+   - **Port:** `80 TCP`  
+   - **Auth:** abilitato (✓)  
+   - **User:** `admin`  
+   - **Password:** *non modificare questo campo. Lascia i valori di default*  
+6. Clicca su **Applica (Apply)** o **OK**.  
+7. Verifica che la connessione sia riuscita: dovresti vedere un **puntino verde** accanto all’indirizzo IP del server nella scheda del **Main Server**.
+
+> 💡 **Nota:** Non abilitare i “Remote servers”. L’unico server da configurare è il *Main server*.
 
 ---
 
