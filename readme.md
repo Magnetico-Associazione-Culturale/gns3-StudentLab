@@ -19,13 +19,20 @@ Prima di iniziare, verifica che il tuo dispositivo soddisfi i requisiti minimi n
         4.  Cerca la voce **"Virtualizzazione"** (Virtualization). Dovrebbe essere indicata come **"Abilitato"** (Enabled).
         5.  Se è "Disabilitato", dovrai abilitarla nel BIOS/UEFI del tuo computer (vedi sotto).
             (Vedi immagine image_15121c.png, image_14f836.png, image_0b15b7.png, image_0a1977.png per riferimento)
-    * **Per macOS:**
+    * **Per macOS con Processori Intel:**
         1.  Apri l'applicazione **Terminale** (cerca in Spotlight o in `Applicazioni/Utility`).
         2.  Digita il seguente comando e premi Invio:
             ```bash
             sysctl -a | grep -E "machdep.cpu.features|VMX"
             ```
         3.  Se l'output include `VMX`, la virtualizzazione Intel VT-x è supportata e abilitata.
+  **Per macOS con Processori Apple Silicon(M1,M2,M3,M4,M5,...):**
+        1.  Apri l'applicazione **Terminale** (cerca in Spotlight o in `Applicazioni/Utility`).
+        2.  Digita il seguente comando e premi Invio:
+            ```bash
+            sysctl kern.hv_support
+            ```
+        3.  Se l'output include "kern.hv_support: 1", la virtualizzazione Intel VT-x è supportata e abilitata.
     * **Per Linux:**
         1.  Apri un terminale.
         2.  Digita il seguente comando e premi Invio:
