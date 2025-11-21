@@ -13,6 +13,7 @@ Questa tabella descrive i collegamenti fisici tra i dispositivi della topologia.
 | R2                  | e0/1                 | e0/1                     | R3                       |
 | R2                  | e1/0                 | nat0                     | NAT1                     |
 | R3                  | e1/0                 | e0                       | PC3                      |
+| PC3                 | e0                   | e1/0                     | R3                       |
 
 ## 2. Assegnazione degli Indirizzi IP
 
@@ -33,7 +34,7 @@ Questa tabella riassume gli indirizzi IP utilizzati nella topologia.
 | R3          | Loopback0        | 3.3.3.3/32            | 255.255.255.255   |                                     |
 | R3          | e0/0 (a R2)      | 10.0.2.2/24           | 255.255.255.0     |                                     |
 | R3          | e1/0 (a PC3)     | 192.168.3.1/24        | 255.255.255.0     |                                     |
-| PC3         | e0               | 192.168.3.0/24        | 255.255.255.0     | Indirizzo di rete di PC3            |
+| PC3         | e0               | 192.168.3.10/24        | 255.255.255.0     | Indirizzo di rete di PC3            |
 
 
 ---
@@ -94,11 +95,11 @@ Su R1:
 configure terminal
 interface Ethernet1/0.10
 encapsulation dot1Q 10
-ip address 192.168.10.1 255.255.255.0
+ip address 192.168.110.1 255.255.255.0
 exit
 interface Ethernet1/0.20
 encapsulation dot1Q 20
-ip address 192.168.20.1 255.255.255.0
+ip address 192.168.120.1 255.255.255.0
 exit
 
 ```
@@ -128,9 +129,9 @@ Su R1:
 configure terminal
 router eigrp 1
 network 1.1.1.1 0.0.0.0
-network 192.168.10.0 0.0.0.255
-network 192.168.20.0 0.0.0.255
-network 10.0.0.0 0.0.0.255
+network 192.168.110.0 0.0.0.255
+network 192.168.120.0 0.0.0.255
+network 10.0.12.0 0.0.0.3
 no auto-summary
 exit
 
@@ -141,9 +142,8 @@ Su R2:
 configure terminal
 router eigrp 1
 network 2.2.2.2 0.0.0.0
-network 10.0.0.0 0.0.0.255
-network 10.0.1.0 0.0.0.255
-network 10.0.2.0 0.0.0.255
+network 10.0.12.0 0.0.0.3
+network 10.0.23.0 0.0.0.3
 no auto-summary
 exit
 
@@ -154,7 +154,7 @@ Su R3:
 configure terminal
 router eigrp 1
 network 3.3.3.3 0.0.0.0
-network 10.0.2.0 0.0.0.255
+network 10.0.23.0 0.0.0.3
 network 192.168.3.0 0.0.0.255
 no auto-summary
 exit
@@ -247,7 +247,7 @@ Su R3:
 ```
 
 configure terminal
-access-list 1 deny 192.168.20.0 0.0.0.255
+access-list 1 deny 192.168.120.0 0.0.0.255
 access-list 1 permit any
 interface Ethernet0/0
 ip access-group 1 in
@@ -278,9 +278,9 @@ Su R1:
 
 configure terminal
 ip access-list extended GUEST-ONLY-INTERNET
-deny ip 192.168.20.0 0.0.0.255 10.0.0.0 0.255.255.255
-deny ip 192.168.20.0 0.0.0.255 172.16.0.0 0.15.255.255
-deny ip 192.168.20.0 0.0.0.255 192.168.0.0 0.0.255.255
+deny ip 192.168.120.0 0.0.0.255 10.0.0.0 0.255.255.255
+deny ip 192.168.120.0 0.0.0.255 172.16.0.0 0.15.255.255
+deny ip 192.168.120.0 0.0.0.255 192.168.0.0 0.0.255.255
 permit ip any any
 interface Ethernet0/0.20
 ip access-group GUEST-ONLY-INTERNET in
@@ -311,8 +311,8 @@ Su R2:
 
 configure terminal
 ip access-list standard NAT_ACL
-permit 192.168.10.0 0.0.0.255
-permit 192.168.20.0 0.0.0.255
+permit 192.168.110.0 0.0.0.255
+permit 192.168.120.0 0.0.0.255
 permit 192.168.3.0 0.0.0.255
 exit
 interface Ethernet1/0
